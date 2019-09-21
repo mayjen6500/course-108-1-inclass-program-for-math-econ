@@ -1,0 +1,268 @@
+---
+title: "課堂練習"
+date: "9/12/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+use_python("/Users/bob0531/anaconda3/envs/myEnvironment/bin/python",
+           required = T)
+use_condaenv("m-team", required = T)
+```
+
+```{r}
+library(reticulate)
+conda_create("myEnvironment")
+```
+
+```{r}
+library(reticulate)
+conda_create("myEnvironment")
+
+library(reticulate)
+use_python("/Users/bob0531/anaconda3/envs/myEnvironment/bin/python", required = T)
+use_condaenv("myEnvironment")
+```
+
+```{r}
+# conda安裝方式
+conda_install("m-team", # 沙盒環境名稱
+              c("numpy","pandas")) # 要安裝的modules
+```
+
+```{r}
+conda_install("m-team", # 沙盒環境名稱
+              c("google-api-python-client"),
+              pip=TRUE) # 
+```
+
+```{python}
+string = "你好"
+string2 = '我很好' # 用單引號也可以
+type(string)
+numInteger = 3
+type(numInteger)
+#len(numInteger)
+numFloat = 3.
+type(numFloat)
+#len(numFloat)
+```
+
+```{python}
+logiT=True
+type(logiT)
+logiF=False
+type(logiF)
+```
+
+```{python}
+logiT+logiT+logiF
+```
+list
+```{python}
+listA = [1,2,True]
+listA
+type(listA)
+listB = [1,["a","b"],True] # nested list
+listB
+type(listB)
+```
+tuple
+```{python}
+tupleC=(1,["a","b"],True)
+type(tupleC)
+print(tupleC)
+```
+
+```{python}
+
+setD={1,"a",(1,4)}
+type(setD)
+print(setD)
+```
+
+```{python}
+print(listA)
+
+a,*b = listA # *吸收剩餘無法對應的元素; 無*採一對一對應unpack。
+a; type(a)
+b; type(b)
+
+*a, b = listA
+a; type(a)
+b; type(b)
+```
+
+```{python}
+gradetuple = ("小明",88,72)
+name,*grade = gradetuple
+```
+
+```{python}
+name
+grade
+type(grade)
+```
+
+```{python}
+gradetuple2 = ("小明",88,72,"男")
+name,*grade,gender = gradetuple2
+
+name
+grade
+gender
+type(gradetuple2)
+
+```
+
+```{python}
+gradetuple3 = ("小王","成績",82,"分")
+name2,score,*score2 = gradetuple3
+
+name2
+score
+score2
+type(gradetuple3)
+```
+
+```{python}
+setD={1,"a",(1,4)}
+type(setD)
+print(setD)
+setE={True,False}
+print(setE)
+setF={1,"b",[1,4]}
+```
+
+```{python}
+setG={1,"b",(1,4,(5,8))}
+print(setG)
+setH={1,"b",(1,4,[5,8])}
+```
+
+```{python}
+setE={"a","b","b"}
+print(setE)
+```
+
+```{python}
+listY=[1,1,3,0,1,0,2]
+list(set(listY)) 
+
+setY = set(listY)
+setY
+listY2 = list(setY)
+listY2
+
+```
+
+```{python}
+listA = [1,2,True]
+listA
+listA[0] # 從0開始數
+listA[1]
+listA[2]
+listA[3] # 沒有3
+```
+
+```{python}
+tupleC
+tupleC[0] # 從0開始數
+tupleC[1]
+tupleC[2]
+tupleC[3] # 沒有3
+```
+
+```{python}
+setE
+setE[0]
+```
+
+```{python}
+listA = [('Mary','John'),('A2838','C8898'),(89,73)]
+len(listA) # 元素個數
+listA[0] # 取第0個元素
+listA[0][1] # 取第0個元素出在，接著取它的第1個元素
+
+type(listA[0])
+type(listA[0][1])
+```
+
+
+```{python}
+tupleC=(1,["a","b"],True)
+tupleC[1][1]
+type(tupleC[1][1])
+
+tupleD=(1,["a","boy"],True)
+tupleD[1][1][1]
+type(tupleD[1][1][1])
+```
+
+```{python}
+#學號 4107732882
+studentID2="4107732882"
+type(studentID2)
+studentID[3]
+
+```
+
+```{python}
+studentID=4107732882
+studentID3=str(studentID)
+studentID3[3]
+
+```
+#取規則多個
+```{python}
+listA=['A','B','C','D','E','F','G','H','I','J']
+listA
+listA[0:5:1]
+listA[0:5]
+listA[0:5:2]
+listA[:5] # 前面5個
+```
+
+```{python}
+listA
+listA[-2:5:-1]
+listA[-2:-6:-1]
+listA[-5:-1:1]
+listA[-5:] # 倒數後5個
+```
+
+listA:
+
+從第2個(index＝1)一直取到底
+
+從第1個(index=0)取到到數第2個
+```{python}
+listA[1:]
+listA[:-1]
+```
+#不規則選取
+```{python}
+list(listA[index] for index in [0,2])
+```
+取出它的第1，7，8元素
+```{python}
+listB=[2,5,-1,31,-22,3,17,25]
+
+list(listB[index] for index in [0,6,7])
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
