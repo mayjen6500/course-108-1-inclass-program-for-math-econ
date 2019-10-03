@@ -1,0 +1,168 @@
+---
+title: "課堂練習"
+date: "9/12/2019"
+output: html_document
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+use_python("/Users/bob0531/anaconda3/envs/myEnvironment/bin/python",
+           required = T)
+use_condaenv("m-team", required = T)
+```
+
+```{r}
+library(reticulate)
+conda_create("myEnvironment")
+```
+
+```{r}
+library(reticulate)
+conda_create("myEnvironment")
+
+library(reticulate)
+use_python("/Users/bob0531/anaconda3/envs/myEnvironment/bin/python", required = T)
+use_condaenv("myEnvironment")
+```
+
+補充：
+```{python}
+listA=(10,2,3,6,8)
+[listA[index] for index in range(len(listA)) if listA[index]>5]
+```
+
+###2.3 dictionary
+```{python}
+dictionaryA={
+  "日期": [2001,2002,2003],
+  "金額": [21000,33000,45880]}
+dictionaryA
+
+dictionaryA["數量"]=[100,200,300]
+dictionaryA
+```
+
+```{python}
+dictionaryA.keys()
+```
+
+```{python}
+dictionaryA.values()
+```
+
+```{python}
+dictionaryA.items()
+```
+
+```{python}
+"日期" in dictionaryA
+```
+
+```{python}
+dictionaryA.keys()
+#dictionaryA.keys()[0] 錯誤
+
+list(dictionaryA.keys())
+list(dictionaryA.keys())[0]
+```
+
+```{python}
+dictionaryA.items()
+list(dictionaryA.items())
+```
+
+```{python}
+list(dictionaryA) #只會顯示出keys
+```
+
+#課堂練習
+```{python}
+import pandas as pd
+
+finStatement=pd.read_csv("http://mopsfin.twse.com.tw/opendata/t187ap06_O_ci.csv")
+dict_finStatement=finStatement.to_dict()
+```
+
+tip:py$... 在python環境中可直接觀察資料
+```{r}
+py$finStatement
+```
+找出dict_finStatement中’營業利益（損失）‘為負的’公司名稱’
+```{python}
+dict_finStatement.keys()
+```
+1.找出損失的index
+```{python}
+profit=list(dict_finStatement.get("營業利益（損失）").values())
+
+lossfirmkeys=[index for index in  range(len(profit)) if profit[index]<0]
+
+```
+
+2.由index進去公司找出名稱
+```{python}
+index=lossfirmkeys[100]
+dict_finStatement.get("公司名稱")[index]   #或
+dict_finStatement.get("公司名稱").get(index)
+
+[dict_finStatement.get("公司名稱").get(index) for index in lossfirmkeys]
+
+```
+
+```{python}
+[dict_finStatement.get("公司名稱").get(index):list(dict_finStatement.get("營業利益（損失）").value())[index] for index in losslossfirmkeys()]
+```
+
+
+
+
+
+```{r}
+# conda安裝方式
+conda_install("m-team", # 沙盒環境名稱
+              c("requests")) # 要安裝的modules
+```
+
+```{python}
+import requests
+response=requests.get("https://cloud.culture.tw/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&category=3")
+danceInfo=response.json()
+```
+
+```{python}
+type(danceInfo)
+```
+
+```{python}
+type(danceInfo[1])
+```
+
+```{python}
+danceInfo[1].keys()
+```
+
+```{python}
+danceInfo[1].values()
+```
+
+```{python}
+danceInfo[1].get("showInfo")
+```
+
+```{python}
+danceInfo[1].items()
+```
+
+
+
+
+
+
+
+
+
+
