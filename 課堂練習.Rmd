@@ -1,6 +1,6 @@
 ---
 title: "課堂練習"
-date: "9/12/2019"
+date: "11/14/2019"
 output: html_document
 ---
 
@@ -13,33 +13,41 @@ use_python("/Users/bob0531/anaconda3/envs/myEnvironment/bin/python",
 use_condaenv("m-team", required = T)
 ```
 
-```{r}
-library(reticulate)
-conda_create("myEnvironment")
+```{python}
+Omega_2={
+    ("h","h"),("h","t"),("t","h"),("t","t")}  
+
+print(Omega_2)
 ```
 
-```{r}
-library(reticulate)
-conda_create("myEnvironment")
-
-library(reticulate)
-use_python("/Users/bob0531/anaconda3/envs/myEnvironment/bin/python", required = T)
-use_condaenv("myEnvironment")
+```{python}
+Omega_21={
+    ["h","h"],["h","t"],["t","h"],["t","t"]}  #set裡面不可放可改變的   []可任意改變
+Omega_21
 ```
 
-```{r}
-# conda安裝方式
-conda_install("m-team", # 沙盒環境名稱
-              c("numpy","pandas")) # 要安裝的modules
+The relational symbol for subset is: ⊆
+```{python}
+# subset
+Omega_2
+
+{('t','h')}.issubset(Omega_2)
+{('t', 'h'), ('h', 'h')}.issubset(Omega_2)
+set([]).issubset(Omega_2) # 空集合 (empty set/ null set)
+Omega_2.issubset(Omega_2) # sample space itself
 ```
 
-```{r}
-conda_install("m-team", # 沙盒環境名稱
-              c("google-api-python-client"),
-              pip=TRUE) # 
-```
 
-```{r}
 
-```
+
+
+
+
+
+
+
+
+
+
+
 

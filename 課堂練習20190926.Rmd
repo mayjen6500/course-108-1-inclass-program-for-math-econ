@@ -431,7 +431,22 @@ print(xlist)
 "".join(xlist)
 ```
 
+```{python}
+x = [1, 2, 3]
+x.insert(2, "hello")
+print(x)
+# [1, 2, 'hello', 3]
+x.insert(0, "start")
+print(x)
+# ['start', 1, 2, 'hello', 3]
+x.insert(-1,"hi")
+print(x)
+```
 
+```{python}
+listA=["Helen", "Alex", "John", "Mark","Alex"]
+listA.index("Alex") # 只找第一個出現的
+```
 
 
 

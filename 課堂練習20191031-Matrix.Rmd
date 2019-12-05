@@ -1,0 +1,262 @@
+---
+title: "課堂練習"
+date: "9/12/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(reticulate)
+use_python("/Users/bob0531/anaconda3/envs/myEnvironment/bin/python",
+           required = T)
+use_condaenv("m-team", required = T)
+```
+
+##5.1 Matrix
+
+```{python}
+import numpy as np
+```
+5.1.1 產生
+以list方式輸入：
+```{python}
+M_list=[[7, -9, -5, 10, -13], 
+    [12, -6, -3, -6, -14], 
+    [7, -5, -4, 1, 5]]
+    
+M=np.array(M_list)
+M
+```
+numpy只是將list物件賦予它一些矩陣操作的彈性。
+
+
+5.1.2 元素粹取
+```{python}
+M
+M_list[1][3]
+# M_list[1,3] # list 不能這麼做
+```
+
+```{python}
+M
+M[1][3]
+M[1,3] # a position
+M[[0,2],:] # list of positions. columns 全取要寫`:`
+M[[0,2],2:5]
+M[[True,False,True],:] # list of booleans
+M[:,[True,True, False,False,False]] 
+M[:,np.sum(M,axis=0)>0] # 只取sum across row>0的column 每一row加起來大於0
+M[np.sum(M,axis=1)<0,:] # 只取sum across col<0的row 每一col加起來大於0
+```
+
+5.1.3 numpy copy method
+copy method不再是shallow copy而是deep copy.
+Matrix2=Matrix1.copy()兩者不會連動  （dictionary才會連動
+```{python}
+M.copy
+
+M2=M.copy()
+M2[1,1]=2
+
+M
+M2
+```
+
+##5.2 Data frame
+
+```{python}
+import pandas as pd
+```
+
+```{python}
+dict_grade={
+    '學號': [172,214,322,425,517],
+    '姓名': ["小明","大雄","胖虎","小新","大白"],
+    '成績': [80,60,90,70,50]
+}
+
+df_grade0=pd.DataFrame(dict_grade)
+```
+
+```{python}
+type(dict_grade['學號'])
+
+type(df_grade0['學號'])
+```
+
+5.2.1 由pd.Series
+```{python}
+df_grade1=pd.DataFrame(
+  {
+    '學號': pd.Series([172,214,322,425,517]),
+    '姓名': pd.Series(["小明","大雄","胖虎","小新","大白"]),
+    '成績': pd.Series([80,60,90,70,50])
+  }
+)
+
+df_grade1
+```
+
+5.2.2 元素粹取
+過去dictionary取法
+```{python}
+dict_grade["學號"][1]
+```
+DataFrame取法
+5.2.2.1 一維取法
+1.取column）label名稱（string or list of strings）取column series
+```{python}
+df_grade1
+
+df_grade1['學號']   #使用Label學號來取
+df_grade1.學號 # 取一個時也可用`.`   （Ｒ的用法： df_grade1＄學號
+
+# 選多個Series
+df_grade1[['學號','姓名']] # 比dictionary多此彈性
+```
+2.（取row）list of booleans取row data: list長度要與總row數相同。
+```{python}
+df_grade0.成績>70
+df_grade0[df_grade0.成績>70]
+```
+```{python}
+df_grade0[[True,False,True,True,False]]
+```
+##不好用
+##3.取row）positions slicing (其他positions非slicing寫法均不行，所以list of positions不可以用)取row data........
+```{python}
+df_grade0[0:1]
+df_grade0[0:2]
+```
+
+
+5.2.2.2 二維取法
+
+```{python}
+df_grade0
+```
+(1) .loc[.row,.col] 取法
+.row以index表示，.col以label表示。
+```{python}
+df_grade0.loc[0,"姓名"]
+df_grade0.loc[2:4,"姓名"] 
+df_grade0.loc[2:4,"學號":"姓名"]  
+```
+```{python}
+df_grade0.loc[[0,2,4],["學號","成績"]] 
+```
+```{python}
+df_grade0.loc[1:3,:] #二維取法下.row或.col要全取時用:表示。
+```
+```{python}
+df_grade0.loc[df_grade0.成績>70,:]
+```
+#不好記(2) .iloc[,]取法  
+#position selection：較不直覺，要去數 （ending最後一個數不算
+```{python}
+df_grade0
+```
+```{python}
+df_grade0.iloc[0,1]
+df_grade0.iloc[2:4,1] # 比df_grade0.loc[2:4,"姓名"]  少了 index 4
+df_grade0.iloc[2:5,1] # = df_grade0.loc[2:4,"姓名"] 
+df_grade0.iloc[2:5,0:1] # 比df_grade0.loc[2:4,"學號":"姓名"] 少了'姓名'
+df_grade0.iloc[2:5,0:2] # = df_grade0.loc[2:4,"學號":"姓名"]
+```
+
+
+5.2.2.2.3 pandas index
+```{python}
+df_grade0
+```
+取出放回random sample 10筆資料，相同index值表示來源相同。
+```{python}
+df_grade0.sample(n=10, replace=True)
+```
+  .set_axis(): 設定index值
+```{python}
+df_grade0
+df_grade0.set_axis(['a','b','a','d','d'],axis=0,inplace=True)
+```
+  .set_index(): column改為index
+```{python}
+df_grade0
+df_grade1=df_grade0.copy()
+df_grade1.set_index("姓名", inplace=True) # inplace=T 直接改變df_grade1 index 
+df_grade1 # after set_index
+df_grade1.reset_index(inplace=True)
+df_grade1 # after reset_index
+```
+
+
+
+5.3 應用
+適時的將list of monotomic types轉成np.array，將dictionary轉成pd.dataFrame可以減化程式複雜度。
+```{python}
+numList=[3,2,11,43]
+```
+list轉為numpy好計算
+```{python}
+numArray=np.array(numList)
+numArray+3
+numArray>10
+numArray+np.array([0,3,-1,2])
+numArray*2
+```
+轉回list
+```{python}
+list(numArray+3)
+list(numArray>10)
+```
+
+例子：找出dict_finStatement中’營業利益（損失）‘為負的’公司名稱
+
+```{python}
+import pandas as pd
+
+finStatement=pd.read_csv("http://mopsfin.twse.com.tw/opendata/t187ap06_O_ci.csv")
+dict_finStatement=finStatement.to_dict()
+```
+
+```{python}
+finStatement['營業利益（損失）']<0
+```
+
+```{python}
+#1  一維
+a=finStatement['公司名稱']
+b=finStatement['營業利益（損失）']<0
+a[b]
+#2 二維
+finStatement.loc[b,'公司名稱']
+```
+
+##Chapter 6 Python模組
+
+```{python}
+import os
+path = os.getcwd()
+print(path)
+```
+
+```{python}
+from mymodule import pi
+pi
+area(2) # 只有import pi沒有import area
+```
+
+```{python}
+from mymodule import pi, area
+pi
+area(2) 
+```
+
+```{python}
+from mymodule import  *
+```
+
+
+
+
+
